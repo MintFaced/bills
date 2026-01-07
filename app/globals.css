@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #e8e6e1;
+
+  /* SubSucker Brand Colors - Army Green, Khaki, Lime */
+  --army-green-950: #1a2410;
+  --army-green-900: #2d3f1a;
+  --army-green-800: #3d5324;
+  --army-green-700: #4d672e;
+  --army-green-600: #5d7b38;
+  --army-green-500: #6d8f42;
+  --army-green-400: #8ba661;
+  --army-green-300: #a9bd80;
+  --army-green-200: #c7d4a0;
+  --army-green-100: #e5ebc0;
+
+  --khaki-950: #2b2619;
+  --khaki-900: #4a3f2b;
+  --khaki-800: #6a583d;
+  --khaki-700: #89714f;
+  --khaki-600: #a98a61;
+  --khaki-500: #c9a373;
+  --khaki-400: #d4b58f;
+  --khaki-300: #dfc7ab;
+  --khaki-200: #ead9c7;
+  --khaki-100: #f5ebe3;
+
+  --lime-950: #1f2e0a;
+  --lime-900: #354d11;
+  --lime-800: #4b6c18;
+  --lime-700: #618b1f;
+  --lime-600: #77aa26;
+  --lime-500: #8dc92d;
+  --lime-400: #a4d457;
+  --lime-300: #bbdf81;
+  --lime-200: #d2eaab;
+  --lime-100: #e9f5d5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Brand Color Theme */
+  --color-army-green-950: var(--army-green-950);
+  --color-army-green-900: var(--army-green-900);
+  --color-army-green-800: var(--army-green-800);
+  --color-army-green-700: var(--army-green-700);
+  --color-army-green-600: var(--army-green-600);
+  --color-army-green-500: var(--army-green-500);
+  --color-army-green-400: var(--army-green-400);
+  --color-army-green-300: var(--army-green-300);
+  --color-army-green-200: var(--army-green-200);
+  --color-army-green-100: var(--army-green-100);
+
+  --color-khaki-950: var(--khaki-950);
+  --color-khaki-900: var(--khaki-900);
+  --color-khaki-800: var(--khaki-800);
+  --color-khaki-700: var(--khaki-700);
+  --color-khaki-600: var(--khaki-600);
+  --color-khaki-500: var(--khaki-500);
+  --color-khaki-400: var(--khaki-400);
+  --color-khaki-300: var(--khaki-300);
+  --color-khaki-200: var(--khaki-200);
+  --color-khaki-100: var(--khaki-100);
+
+  --color-lime-950: var(--lime-950);
+  --color-lime-900: var(--lime-900);
+  --color-lime-800: var(--lime-800);
+  --color-lime-700: var(--lime-700);
+  --color-lime-600: var(--lime-600);
+  --color-lime-500: var(--lime-500);
+  --color-lime-400: var(--lime-400);
+  --color-lime-300: var(--lime-300);
+  --color-lime-200: var(--lime-200);
+  --color-lime-100: var(--lime-100);
+
+  --color-primary: var(--army-green-600);
+  --color-secondary: var(--khaki-500);
+  --color-accent: var(--lime-500);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
