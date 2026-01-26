@@ -1,181 +1,168 @@
 'use client'
 
-import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 
-export default function LandingPage() {
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
+export default function ArtistMomentsHome() {
+  const router = useRouter()
+  const [dragActive, setDragActive] = useState(false)
+  const [file, setFile] = useState<File | null>(null)
+  const [uploading, setUploading] = useState(false)
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setMessage('')
-
-    const supabase = createClient()
-
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      setMessage(error.message)
-    } else {
-      setMessage('Check your email for the magic link!')
+    e.stopPropagation()
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setDragActive(true)
+    } else if (e.type === 'dragleave') {
+      setDragActive(false)
     }
+  }, [])
 
-    setLoading(false)
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(false)
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const droppedFile = e.dataTransfer.files[0]
+      if (droppedFile.name.endsWith('.csv')) {
+        setFile(droppedFile)
+      }
+    }
+  }, [])
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  const handleUpload = async () => {
+    if (!file) return
+
+    setUploading(true)
+
+    // Parse CSV and navigate to timeline
+    // For now, we'll just simulate upload and redirect
+    await new Promise(resolve => setTimeout(resolve, 1500))
+
+    // Store file in sessionStorage for timeline page to process
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const csvData = e.target?.result as string
+      sessionStorage.setItem('etherscan-csv', csvData)
+      router.push('/timeline')
+    }
+    reader.readAsText(file)
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4">
-      {/* Hero Section */}
-      <main className="mx-auto max-w-4xl text-center">
-        <h1 className="mb-6 text-6xl font-bold tracking-tight text-foreground md:text-7xl lg:text-8xl">
-          Sub<span className="text-lime-500">Sucker</span>
+    <div className="scanlines flex min-h-screen flex-col items-center justify-center bg-background px-4">
+      {/* Retro Grid Background */}
+      <div className="fixed inset-0 opacity-20" style={{
+        backgroundImage: `
+          linear-gradient(var(--purple-600) 1px, transparent 1px),
+          linear-gradient(90deg, var(--purple-600) 1px, transparent 1px)
+        `,
+        backgroundSize: '30px 30px',
+      }} />
+
+      <main className="relative z-10 mx-auto max-w-4xl text-center">
+        {/* Hero Title */}
+        <h1 className="retro-glow mb-4 font-mono text-5xl font-bold tracking-wider text-foreground md:text-6xl lg:text-7xl">
+          ARTIST
+        </h1>
+        <h1 className="retro-glow mb-8 font-mono text-5xl font-bold tracking-wider text-pink-500 md:text-6xl lg:text-7xl">
+          MOMENTS
         </h1>
 
-        <p className="mb-4 text-xl text-khaki-300 md:text-2xl lg:text-3xl">
-          Stop bleeding cash on subscriptions you forgot about
+        <p className="mb-4 font-mono text-xl text-purple-300 md:text-2xl">
+          Your Ethereum Journey in 80s Atari Style
         </p>
 
-        <p className="mx-auto mb-12 max-w-2xl text-lg text-khaki-400">
-          Upload a bank CSV, we'll find subscription creep and overpay, give you the exact scripts to
-          cancel/negotiate, then verify savings at Day 31 and Day 90. Built for NZ manufacturers (2–25 staff).
+        <p className="mx-auto mb-16 max-w-2xl font-mono text-sm text-purple-400">
+          Upload your Etherscan CSV to transform your blockchain history into a pixel-perfect visual timeline.
+          Watch your Genesis Mint, contract deployments, and epic sales come alive in retro glory.
         </p>
 
-        {/* Sign In Form */}
-        <div className="mx-auto max-w-md">
-          <form onSubmit={handleSignIn} className="space-y-4">
+        {/* Upload Zone */}
+        <div className="game-screen mx-auto max-w-2xl rounded-lg p-8">
+          <div
+            onDragEnter={handleDrag}
+            onDragOver={handleDrag}
+            onDragLeave={handleDrag}
+            onDrop={handleDrop}
+            className={`pixel-border relative rounded-lg p-12 transition-all ${
+              dragActive ? 'border-pink-500 bg-pink-500/10' : 'border-purple-600 bg-purple-900/30'
+            }`}
+          >
             <input
-              type="email"
-              placeholder="Your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full rounded-lg border-2 border-army-green-600 bg-background px-6 py-4 text-lg text-foreground placeholder-khaki-600 focus:border-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-500/50"
+              type="file"
+              accept=".csv"
+              onChange={handleFileChange}
+              className="absolute inset-0 cursor-pointer opacity-0"
+              id="csv-upload"
             />
 
+            <div className="pointer-events-none">
+              {file ? (
+                <div className="space-y-4">
+                  <div className="text-6xl">📊</div>
+                  <p className="font-mono text-lg font-bold text-cyan-400">{file.name}</p>
+                  <p className="font-mono text-sm text-purple-300">
+                    {(file.size / 1024).toFixed(2)} KB
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="text-6xl">⬆️</div>
+                  <p className="font-mono text-lg font-bold text-foreground">
+                    DROP ETHERSCAN CSV HERE
+                  </p>
+                  <p className="font-mono text-sm text-purple-400">or click to browse</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {file && (
             <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-lime-600 px-8 py-4 text-lg font-semibold text-army-green-950 transition-all hover:bg-lime-500 disabled:opacity-50"
+              onClick={handleUpload}
+              disabled={uploading}
+              className="pixel-button mt-8 w-full bg-gradient-to-r from-pink-600 to-purple-600 py-4 font-mono text-xl font-bold text-white hover:from-pink-500 hover:to-purple-500 disabled:opacity-50"
             >
-              {loading ? 'Sending magic link...' : 'Get Started Free'}
+              {uploading ? '⏳ LOADING...' : '▶ GENERATE TIMELINE'}
             </button>
-
-            {message && (
-              <p
-                className={`text-sm ${message.includes('Check') ? 'text-lime-400' : 'text-red-400'}`}
-              >
-                {message}
-              </p>
-            )}
-          </form>
-
-          <p className="mt-6 text-sm text-khaki-500">
-            No credit card. Upload your CSV, see your potential savings for free.
-          </p>
+          )}
         </div>
 
-        {/* Value Props */}
-        <div className="mt-16 grid gap-8 md:grid-cols-3">
-          <div className="rounded-lg border border-army-green-800 bg-army-green-950 p-6">
-            <div className="mb-3 text-4xl font-bold text-lime-500">$0</div>
-            <div className="text-sm text-khaki-300">Free scan & hero number</div>
+        {/* Info Cards */}
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          <div className="game-screen pixel-border rounded-lg border-purple-600 p-6">
+            <div className="mb-3 font-mono text-4xl">🎮</div>
+            <div className="font-mono text-xs uppercase text-purple-300">Genesis Mint</div>
+            <div className="mt-2 font-mono text-sm text-purple-400">Your first NFT drop immortalized</div>
           </div>
 
-          <div className="rounded-lg border border-army-green-800 bg-army-green-950 p-6">
-            <div className="mb-3 text-4xl font-bold text-lime-500">10%</div>
-            <div className="text-sm text-khaki-300">Success fee on confirmed savings only</div>
+          <div className="game-screen pixel-border rounded-lg border-pink-600 p-6">
+            <div className="mb-3 font-mono text-4xl">💰</div>
+            <div className="font-mono text-xs uppercase text-pink-300">Epic Sales</div>
+            <div className="mt-2 font-mono text-sm text-pink-400">Major milestones highlighted</div>
           </div>
 
-          <div className="rounded-lg border border-army-green-800 bg-army-green-950 p-6">
-            <div className="mb-3 text-4xl font-bold text-lime-500">31 days</div>
-            <div className="text-sm text-khaki-300">Action sprint with scripts & reminders</div>
-          </div>
-        </div>
-
-        {/* How It Works */}
-        <div className="mt-20 text-left">
-          <h2 className="mb-8 text-center text-3xl font-bold text-foreground">How It Works</h2>
-
-          <div className="space-y-6">
-            <div className="flex gap-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime-600 text-lg font-bold text-army-green-950">
-                1
-              </div>
-              <div>
-                <h3 className="mb-1 text-lg font-semibold text-foreground">Upload Bank CSV</h3>
-                <p className="text-khaki-400">
-                  Works with ANZ, BNZ, SBS, and most NZ banks. We auto-detect recurring charges.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime-600 text-lg font-bold text-army-green-950">
-                2
-              </div>
-              <div>
-                <h3 className="mb-1 text-lg font-semibold text-foreground">See Your Savings Number</h3>
-                <p className="text-khaki-400">
-                  We show potential annual savings from duplicates, retention discounts, and monthly→annual
-                  switches. Free.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime-600 text-lg font-bold text-army-green-950">
-                3
-              </div>
-              <div>
-                <h3 className="mb-1 text-lg font-semibold text-foreground">
-                  Unlock Full Playbook ($99 or $49)
-                </h3>
-                <p className="text-khaki-400">
-                  Pay a refundable deposit ($99, or $49 if you share on LinkedIn). Get cancel scripts,
-                  negotiation templates, and a 31-day action plan.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime-600 text-lg font-bold text-army-green-950">
-                4
-              </div>
-              <div>
-                <h3 className="mb-1 text-lg font-semibold text-foreground">We Verify & True-Up</h3>
-                <p className="text-khaki-400">
-                  At Day 90, re-upload your CSV. We verify actual savings, charge our 10% fee (capped), and
-                  refund the difference. If $0 savings, full refund.
-                </p>
-              </div>
-            </div>
+          <div className="game-screen pixel-border rounded-lg border-cyan-600 p-6">
+            <div className="mb-3 font-mono text-4xl">🚀</div>
+            <div className="font-mono text-xs uppercase text-cyan-300">Contract Deploy</div>
+            <div className="mt-2 font-mono text-sm text-cyan-400">Birth of your collections</div>
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-20 border-t border-army-green-800 pt-8">
-          <div className="flex flex-col items-center gap-4 text-sm text-khaki-600 md:flex-row md:justify-between">
-            <div>© 2026 SubSucker. Built for NZ businesses.</div>
-            <div className="flex gap-6">
-              <a href="/leaderboard" className="hover:text-lime-500">
-                Leaderboard
-              </a>
-              <a href="/privacy" className="hover:text-lime-500">
-                Privacy
-              </a>
-              <a href="/terms" className="hover:text-lime-500">
-                Terms
-              </a>
-            </div>
-          </div>
+        <footer className="mt-20 border-t border-purple-800 pt-8">
+          <p className="font-mono text-xs text-purple-600">
+            ARTIST MOMENTS © 2026 - POWERED BY ETHERSCAN & RETRO VIBES
+          </p>
         </footer>
       </main>
     </div>

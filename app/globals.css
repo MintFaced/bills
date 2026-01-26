@@ -1,91 +1,253 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #e8e6e1;
+  --background: #1a0a2e;
+  --foreground: #f0e6ff;
 
-  /* SubSucker Brand Colors - Army Green, Khaki, Lime */
-  --army-green-950: #1a2410;
-  --army-green-900: #2d3f1a;
-  --army-green-800: #3d5324;
-  --army-green-700: #4d672e;
-  --army-green-600: #5d7b38;
-  --army-green-500: #6d8f42;
-  --army-green-400: #8ba661;
-  --army-green-300: #a9bd80;
-  --army-green-200: #c7d4a0;
-  --army-green-100: #e5ebc0;
+  /* Artist Moments Brand Colors - MintFace Purple & Pink with Atari vibes */
+  --purple-950: #0f0520;
+  --purple-900: #1a0a2e;
+  --purple-800: #2d1b4e;
+  --purple-700: #3f2c6e;
+  --purple-600: #6b4ce6;
+  --purple-500: #8b5cf6;
+  --purple-400: #a78bfa;
+  --purple-300: #c4b5fd;
+  --purple-200: #ddd6fe;
+  --purple-100: #ede9fe;
 
-  --khaki-950: #2b2619;
-  --khaki-900: #4a3f2b;
-  --khaki-800: #6a583d;
-  --khaki-700: #89714f;
-  --khaki-600: #a98a61;
-  --khaki-500: #c9a373;
-  --khaki-400: #d4b58f;
-  --khaki-300: #dfc7ab;
-  --khaki-200: #ead9c7;
-  --khaki-100: #f5ebe3;
+  --pink-950: #2d0a2e;
+  --pink-900: #4a0e4e;
+  --pink-800: #701a75;
+  --pink-700: #a21caf;
+  --pink-600: #d946ef;
+  --pink-500: #e879f9;
+  --pink-400: #f0abfc;
+  --pink-300: #f5d0fe;
+  --pink-200: #fae8ff;
+  --pink-100: #fdf4ff;
 
-  --lime-950: #1f2e0a;
-  --lime-900: #354d11;
-  --lime-800: #4b6c18;
-  --lime-700: #618b1f;
-  --lime-600: #77aa26;
-  --lime-500: #8dc92d;
-  --lime-400: #a4d457;
-  --lime-300: #bbdf81;
-  --lime-200: #d2eaab;
-  --lime-100: #e9f5d5;
+  --cyan-950: #082f49;
+  --cyan-900: #0e4c6d;
+  --cyan-800: #155e75;
+  --cyan-700: #0891b2;
+  --cyan-600: #06b6d4;
+  --cyan-500: #22d3ee;
+  --cyan-400: #67e8f9;
+  --cyan-300: #a5f3fc;
+  --cyan-200: #cffafe;
+  --cyan-100: #ecfeff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'Courier New', 'Courier', monospace;
 
   /* Brand Color Theme */
-  --color-army-green-950: var(--army-green-950);
-  --color-army-green-900: var(--army-green-900);
-  --color-army-green-800: var(--army-green-800);
-  --color-army-green-700: var(--army-green-700);
-  --color-army-green-600: var(--army-green-600);
-  --color-army-green-500: var(--army-green-500);
-  --color-army-green-400: var(--army-green-400);
-  --color-army-green-300: var(--army-green-300);
-  --color-army-green-200: var(--army-green-200);
-  --color-army-green-100: var(--army-green-100);
+  --color-purple-950: var(--purple-950);
+  --color-purple-900: var(--purple-900);
+  --color-purple-800: var(--purple-800);
+  --color-purple-700: var(--purple-700);
+  --color-purple-600: var(--purple-600);
+  --color-purple-500: var(--purple-500);
+  --color-purple-400: var(--purple-400);
+  --color-purple-300: var(--purple-300);
+  --color-purple-200: var(--purple-200);
+  --color-purple-100: var(--purple-100);
 
-  --color-khaki-950: var(--khaki-950);
-  --color-khaki-900: var(--khaki-900);
-  --color-khaki-800: var(--khaki-800);
-  --color-khaki-700: var(--khaki-700);
-  --color-khaki-600: var(--khaki-600);
-  --color-khaki-500: var(--khaki-500);
-  --color-khaki-400: var(--khaki-400);
-  --color-khaki-300: var(--khaki-300);
-  --color-khaki-200: var(--khaki-200);
-  --color-khaki-100: var(--khaki-100);
+  --color-pink-950: var(--pink-950);
+  --color-pink-900: var(--pink-900);
+  --color-pink-800: var(--pink-800);
+  --color-pink-700: var(--pink-700);
+  --color-pink-600: var(--pink-600);
+  --color-pink-500: var(--pink-500);
+  --color-pink-400: var(--pink-400);
+  --color-pink-300: var(--pink-300);
+  --color-pink-200: var(--pink-200);
+  --color-pink-100: var(--pink-100);
 
-  --color-lime-950: var(--lime-950);
-  --color-lime-900: var(--lime-900);
-  --color-lime-800: var(--lime-800);
-  --color-lime-700: var(--lime-700);
-  --color-lime-600: var(--lime-600);
-  --color-lime-500: var(--lime-500);
-  --color-lime-400: var(--lime-400);
-  --color-lime-300: var(--lime-300);
-  --color-lime-200: var(--lime-200);
-  --color-lime-100: var(--lime-100);
+  --color-cyan-950: var(--cyan-950);
+  --color-cyan-900: var(--cyan-900);
+  --color-cyan-800: var(--cyan-800);
+  --color-cyan-700: var(--cyan-700);
+  --color-cyan-600: var(--cyan-600);
+  --color-cyan-500: var(--cyan-500);
+  --color-cyan-400: var(--cyan-400);
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-200: var(--cyan-200);
+  --color-cyan-100: var(--cyan-100);
 
-  --color-primary: var(--army-green-600);
-  --color-secondary: var(--khaki-500);
-  --color-accent: var(--lime-500);
+  --color-primary: var(--purple-600);
+  --color-secondary: var(--pink-500);
+  --color-accent: var(--cyan-400);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Atari-style pixel border */
+.pixel-border {
+  border: 4px solid;
+  border-image: repeating-linear-gradient(
+    90deg,
+    var(--purple-600) 0px,
+    var(--purple-600) 4px,
+    var(--pink-600) 4px,
+    var(--pink-600) 8px
+  ) 4;
+}
+
+/* Retro glow effect */
+.retro-glow {
+  text-shadow:
+    0 0 10px var(--pink-500),
+    0 0 20px var(--pink-600),
+    0 0 30px var(--purple-600);
+}
+
+/* Scanline effect */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Pixel art button */
+.pixel-button {
+  position: relative;
+  border: none;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+.pixel-button:hover {
+  transform: translate(2px, 2px);
+  transition: transform 0.05s;
+}
+
+/* Atari-style game container */
+.game-screen {
+  background: linear-gradient(
+    180deg,
+    var(--purple-900) 0%,
+    var(--purple-950) 100%
+  );
+  box-shadow:
+    inset 0 0 100px rgba(107, 76, 230, 0.3),
+    0 0 50px rgba(217, 70, 239, 0.2);
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pixelPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes glitchShake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-2px, -2px); }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.5s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.5s ease-out;
+}
+
+.animate-pixel-pulse {
+  animation: pixelPulse 2s ease-in-out infinite;
+}
+
+.animate-glitch {
+  animation: glitchShake 0.3s ease-in-out;
+}
+
+/* Pixel perfect inputs */
+input[type="file"]::file-selector-button {
+  position: relative;
+  border: none;
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  background: var(--purple-600);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  color: white;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--purple-500);
+  transform: translate(2px, 2px);
+  transition: transform 0.05s;
 }
