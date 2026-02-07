@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "allium-mcp": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.allium.so/",
+        "--header",
+        "X-API-KEY:${ALLIUM_API_KEY}"
+      ],
+      "env": {
+        "ALLIUM_API_KEY": ""
+      }
+    }
+  }
+}
